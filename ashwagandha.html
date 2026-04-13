@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashwagandha - Herbal Knowledge Garden</title>
+  <style>
+    /* Import fonts and reuse Aloe Vera theme */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Marcellus&display=swap');
+
+    :root {
+      --primary-green: #2e5933;
+      --secondary-green: #6ca96d;
+      --aloe-light: #e8f9e9;
+      --aloe-dark: #1d3b1f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8fbf5, #e8f5e9);
+      color: var(--aloe-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .hero-section {
+      height: 70vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-image {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-content h1 {
+      font-family: 'Marcellus', serif;
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .hero-content h2 {
+      font-family: 'Marcellus', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0);}
+      40%{transform:translateX(-50%) translateY(-10px);}
+      60%{transform:translateX(-50%) translateY(-5px);}
+    }
+
+    .plant-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .introduction {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 0 20px;
+    }
+
+    .introduction p {
+      font-size: 1.3rem;
+      color: #2e4d2e;
+      font-style: italic;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .section-title {
+      font-family: 'Marcellus', serif;
+      font-size: 2.5rem;
+      color: var(--primary-green);
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: var(--secondary-green);
+      border-radius: 2px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .benefit-card {
+      background: linear-gradient(135deg, #ffffff, #f8fbf5);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      border-left: 4px solid var(--secondary-green);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.3s ease;
+    }
+
+    .benefit-card.visible { opacity: 1; transform: translateY(0); }
+
+    .benefit-icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+    .benefit-card h3 { color: var(--primary-green); margin-bottom: 15px; font-size: 1.4rem; }
+    .benefit-card p { color: #4b694b; line-height: 1.6; }
+
+    .traditional-benefits {
+      background: linear-gradient(135deg, #e8f5e9, #f8fbf5);
+      padding: 50px;
+      border-radius: 20px;
+      margin: 60px 0;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .benefits-list {
+      list-style: none;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .benefits-list li {
+      background: linear-gradient(120deg, #e4f5e6, #f5fff7);
+      color: var(--aloe-dark);
+      padding: 20px;
+      border-radius: 15px;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-left: 5px solid var(--secondary-green);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .benefits-list li.visible { opacity: 1; transform: translateX(0); }
+    .benefit-emoji { font-size: 1.5rem; }
+
+    .growing-guide, .usage-section { margin: 60px 0; }
+
+    .growth-stages {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .growth-stage {
+      text-align: center;
+      flex: 1;
+      min-width: 200px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .growth-stage.visible { opacity: 1; transform: translateY(0); }
+    .stage-icon { font-size: 3rem; margin-bottom: 15px; animation: pulse 2s infinite; }
+
+    .usage-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .usage-tab {
+      padding: 12px 25px;
+      background: var(--aloe-light);
+      border: 2px solid var(--secondary-green);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .usage-tab.active { background: var(--secondary-green); color: white; }
+
+    .usage-content { display: none; animation: fadeInUp 0.5s ease; max-width: 800px; margin: 0 auto; }
+    .usage-content.active { display: block; }
+
+    .usage-content ul { list-style: none; margin-top: 20px; }
+    .usage-content li {
+      background: linear-gradient(120deg, #e4f5e6, #f5fff7);
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--secondary-green);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 50px auto 0;
+      padding: 15px 30px;
+      border-radius: 30px;
+      background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,80,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-btn:hover { background: linear-gradient(to right, #244a29, #5d925d); transform: translateY(-3px); }
+    footer { background: linear-gradient(135deg, var(--primary-green), var(--secondary-green)); color: #fff; text-align: center; padding: 40px 20px; margin-top: 70px; }
+
+    @keyframes fadeInUp { from {opacity:0;transform:translateY(30px);} to {opacity:1;transform:translateY(0);} }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+  </style>
+</head>
+
+<body>
+  <section class="hero-section">
+    <img src="https://plantura.garden/uk/wp-content/uploads/sites/2/2023/06/ashwagandha-fruits.jpg" alt="Ashwagandha Plant" alt="Ashwagandha Plant" class="hero-image">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Ashwagandha</h1>
+      <h2>Withania somnifera</h2>
+      <p style="font-size:1.2rem;margin-top:20px;text-shadow:1px 1px 3px rgba(0,0,0,0.5);">The Stress-Relieving Root of Strength</p>
+    </div>
+    <div class="scroll-indicator">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <main class="plant-page">
+    <section class="introduction">
+      <p>"Ashwagandha, the powerful adaptogenic herb, has been used for centuries in Ayurveda to enhance vitality, reduce stress, and restore overall balance to the body and mind."</p>
+    </section>
+
+    <section class="benefits-section">
+      <h2 class="section-title">Key Benefits</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <span class="benefit-icon">🧘‍♂️</span>
+          <h3>Reduces Stress</h3>
+          <p>Helps the body manage stress and anxiety naturally through its adaptogenic properties.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">💪</span>
+          <h3>Boosts Energy & Strength</h3>
+          <p>Improves stamina, strength, and overall vitality—often known as Indian Ginseng.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🧠</span>
+          <h3>Supports Mental Health</h3>
+          <p>Enhances memory, focus, and promotes restful sleep while calming the nervous system.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="traditional-benefits">
+      <h2 class="section-title">Traditional Benefits</h2>
+      <ul class="benefits-list">
+        <li><span class="benefit-emoji">🌿</span>Promotes overall wellness and longevity</li>
+        <li><span class="benefit-emoji">😌</span>Reduces anxiety, stress, and depression</li>
+        <li><span class="benefit-emoji">💪</span>Boosts muscle growth and endurance</li>
+        <li><span class="benefit-emoji">🧠</span>Improves focus and mental clarity</li>
+        <li><span class="benefit-emoji">❤️</span>Balances hormones and supports heart health</li>
+        <li><span class="benefit-emoji">🌙</span>Improves sleep quality and relaxation</li>
+      </ul>
+    </section>
+
+    <section class="growing-guide">
+      <h2 class="section-title">Growing Timeline</h2>
+      <div class="growth-stages">
+        <div class="growth-stage"><span class="stage-icon">🌱</span><h4>Seed Germination</h4><p>2–3 weeks</p></div>
+        <div class="growth-stage"><span class="stage-icon">🌿</span><h4>Vegetative Growth</h4><p>1–2 months</p></div>
+        <div class="growth-stage"><span class="stage-icon">🌾</span><h4>Root Development</h4><p>3–4 months</p></div>
+        <div class="growth-stage"><span class="stage-icon">🪴</span><h4>Harvest Ready</h4><p>5–6 months</p></div>
+      </div>
+    </section>
+
+    <section class="usage-section">
+      <h2 class="section-title">Practical Uses</h2>
+      <div class="usage-tabs">
+        <div class="usage-tab active" data-tab="medicinal">Medicinal</div>
+        <div class="usage-tab" data-tab="energy">Energy & Vitality</div>
+        <div class="usage-tab" data-tab="mental">Mental Wellness</div>
+      </div>
+
+      <div class="usage-content active" id="medicinal">
+        <h3 style="color:var(--primary-green);text-align:center;margin-bottom:20px;">🌿 Medicinal Uses</h3>
+        <ul>
+          <li>Used in Ayurveda to combat stress, fatigue, and low energy.</li>
+          <li>Strengthens immunity and supports hormone balance.</li>
+          <li>Helps lower blood sugar and cortisol levels naturally.</li>
+        </ul>
+      </div>
+
+      <div class="usage-content" id="energy">
+        <h3 style="color:var(--primary-green);text-align:center;margin-bottom:20px;">💪 Energy & Vitality</h3>
+        <ul>
+          <li>Enhances stamina and physical performance.</li>
+          <li>Promotes muscle growth and recovery post-exercise.</li>
+          <li>Improves reproductive health and vitality.</li>
+        </ul>
+      </div>
+
+      <div class="usage-content" id="mental">
+        <h3 style="color:var(--primary-green);text-align:center;margin-bottom:20px;">🧘‍♀️ Mental Wellness</h3>
+        <ul>
+          <li>Reduces anxiety and calms the nervous system.</li>
+          <li>Enhances focus, memory, and overall mental clarity.</li>
+          <li>Improves sleep and promotes inner peace.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div style="text-align:center;">
+      <a href="home.html" class="back-btn"><span>←</span>Back to Herbal Garden</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Herbal Knowledge Garden | Ashwagandha — The Root of Vitality 🌿</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeScrollAnimations();
+      initializeUsageTabs();
+      document.querySelector('.scroll-indicator').addEventListener('click', function() {
+        document.querySelector('.plant-page').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    function initializeScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.benefit-card, .benefits-list li, .growth-stage')
+        .forEach(el => observer.observe(el));
+    }
+
+    function initializeUsageTabs() {
+      const tabs = document.querySelectorAll('.usage-tab');
+      const contents = document.querySelectorAll('.usage-content');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          contents.forEach(c => c.classList.remove('active'));
+          document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+      });
+    }
+  </script>
+</body>
+</html>

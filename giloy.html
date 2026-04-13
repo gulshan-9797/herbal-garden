@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giloy - Herbal Knowledge Garden</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Marcellus&display=swap');
+
+    :root {
+      --primary-green: #2e5933;
+      --secondary-green: #6ca96d;
+      --aloe-light: #e8f9e9;
+      --aloe-dark: #1d3b1f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8fbf5, #e8f5e9);
+      color: var(--aloe-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Hero Section with Image Background */
+    .hero-section {
+      height: 70vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-content h1 {
+      font-family: 'Marcellus', serif;
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .hero-content h2 {
+      font-family: 'Marcellus', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    /* Main Content */
+    .plant-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(135deg, #f8fbf5, #e8f5e9);
+    }
+
+    /* Introduction */
+    .introduction {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 0 20px;
+    }
+
+    .introduction p {
+      font-size: 1.3rem;
+      color: #2e4d2e;
+      font-style: italic;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      margin: 60px 0;
+    }
+
+    .section-title {
+      font-family: 'Marcellus', serif;
+      font-size: 2.5rem;
+      color: var(--primary-green);
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: var(--secondary-green);
+      border-radius: 2px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .benefit-card {
+      background: linear-gradient(135deg, #ffffff, #f8fbf5);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--secondary-green);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .benefit-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .benefit-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .benefit-card h3 {
+      color: var(--primary-green);
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+
+    .benefit-card p {
+      color: #4b694b;
+      line-height: 1.6;
+    }
+
+    /* Traditional Benefits */
+    .traditional-benefits {
+      background: linear-gradient(135deg, #e8f5e9, #f8fbf5);
+      padding: 50px;
+      border-radius: 20px;
+      margin: 60px 0;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .benefits-list {
+      list-style: none;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .benefits-list li {
+      background: linear-gradient(120deg, #e4f5e6, #f5fff7);
+      color: var(--aloe-dark);
+      padding: 20px;
+      border-radius: 15px;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border-left: 5px solid var(--secondary-green);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .benefits-list li.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .benefits-list li:hover {
+      transform: translateX(10px);
+      box-shadow: 0 8px 25px rgba(0, 100, 0, 0.15);
+    }
+
+    .benefit-emoji {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    /* Growing Guide */
+    .growing-guide {
+      margin: 60px 0;
+    }
+
+    .growth-stages {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 40px 0;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .growth-stage {
+      text-align: center;
+      flex: 1;
+      min-width: 200px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .growth-stage.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stage-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      display: block;
+      animation: pulse 2s infinite;
+    }
+
+    .growth-stage h4 {
+      color: var(--primary-green);
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .growth-stage p {
+      color: #4b694b;
+    }
+
+    /* Usage Section */
+    .usage-section {
+      margin: 60px 0;
+    }
+
+    .usage-tabs {
+      display: flex;
+      gap: 10px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .usage-tab {
+      padding: 12px 25px;
+      background: var(--aloe-light);
+      border: 2px solid var(--secondary-green);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .usage-tab.active {
+      background: var(--secondary-green);
+      color: white;
+    }
+
+    .usage-tab:hover {
+      transform: translateY(-2px);
+    }
+
+    .usage-content {
+      display: none;
+      animation: fadeInUp 0.5s ease;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .usage-content.active {
+      display: block;
+    }
+
+    .usage-content ul {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .usage-content li {
+      background: linear-gradient(120deg, #e4f5e6, #f5fff7);
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--secondary-green);
+    }
+
+    /* Back Button */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 50px auto 0;
+      padding: 15px 30px;
+      border-radius: 30px;
+      background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 80, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .back-btn:hover::before {
+      left: 100%;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(to right, #244a29, #5d925d);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 100, 0, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 70px;
+    }
+
+    footer p {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-content h2 {
+        font-size: 1.4rem;
+      }
+      
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .growth-stages {
+        flex-direction: column;
+      }
+      
+      .usage-tabs {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .usage-tab {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-section {
+        height: 60vh;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .traditional-benefits {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Hero Section with Single Image -->
+  <section class="hero-section">
+    <img src="https://static.toiimg.com/photo/78089961.cms" 
+         alt="Giloy Plant" class="hero-image">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Giloy</h1>
+      <h2>Tinospora cordifolia</h2>
+      <p style="font-size: 1.2rem; margin-top: 20px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">
+        The Root of Immortality
+      </p>
+    </div>
+    <div class="scroll-indicator">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="plant-page">
+    <!-- Introduction -->
+    <section class="introduction">
+      <p>
+        "Amrita - The nectar of immortality - Giloy has been celebrated in Ayurvedic texts for centuries as a powerful immunomodulator that boosts immunity, fights infections, and promotes overall health and longevity."
+      </p>
+    </section>
+
+    <!-- Key Benefits -->
+    <section class="benefits-section">
+      <h2 class="section-title">Key Benefits</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <span class="benefit-icon">🛡️</span>
+          <h3>Immunity Booster</h3>
+          <p>Enhances immune system function and increases resistance to infections and diseases.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🔥</span>
+          <h3>Fever Reducer</h3>
+          <p>Effectively reduces fever and helps manage symptoms of dengue, malaria, and swine flu.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🩺</span>
+          <h3>Detoxifier</h3>
+          <p>Purifies blood, removes toxins, and supports liver function for overall detoxification.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Traditional Benefits -->
+    <section class="traditional-benefits">
+      <h2 class="section-title">Traditional Benefits</h2>
+      <ul class="benefits-list">
+        <li>
+          <span class="benefit-emoji">🛡️</span>
+          <span>Boosts immunity and increases resistance to infections</span>
+        </li>
+        <li>
+          <span class="benefit-emoji">🔥</span>
+          <span>Reduces fever and manages symptoms of various diseases</span>
+        </li>
+        <li>
+          <span class="benefit-emoji">🩺</span>
+          <span>Detoxifies blood and supports liver function</span>
+        </li>
+        <li>
+          <span class="benefit-emoji">🩸</span>
+          <span>Improves digestion and treats digestive disorders</span>
+        </li>
+        <li>
+          <span class="benefit-emoji">💊</span>
+          <span>Manages diabetes by regulating blood sugar levels</span>
+        </li>
+        <li>
+          <span class="benefit-emoji">🌿</span>
+          <span>Reduces stress and anxiety with adaptogenic properties</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Growing Guide -->
+    <section class="growing-guide">
+      <h2 class="section-title">Growing Timeline</h2>
+      <div class="growth-stages">
+        <div class="growth-stage">
+          <span class="stage-icon">🪴</span>
+          <h4>Stem Planting</h4>
+          <p>0-2 weeks</p>
+        </div>
+        <div class="growth-stage">
+          <span class="stage-icon">🌱</span>
+          <h4>Rooting</h4>
+          <p>2-4 weeks</p>
+        </div>
+        <div class="growth-stage">
+          <span class="stage-icon">🌿</span>
+          <h4>Vine Growth</h4>
+          <p>1-3 months</p>
+        </div>
+        <div class="growth-stage">
+          <span class="stage-icon">💚</span>
+          <h4>Harvest Ready</h4>
+          <p>3-6 months</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Usage Section -->
+    <section class="usage-section">
+      <h2 class="section-title">Practical Uses</h2>
+      <div class="usage-tabs">
+        <div class="usage-tab active" data-tab="immunity">Immunity Boost</div>
+        <div class="usage-tab" data-tab="fever">Fever Management</div>
+        <div class="usage-tab" data-tab="digestive">Digestive Health</div>
+      </div>
+
+      <div class="usage-content active" id="immunity">
+        <h3 style="color: var(--primary-green); text-align: center; margin-bottom: 20px;">🛡️ Immunity Enhancement</h3>
+        <ul>
+          <li>Take 1-2 teaspoons of Giloy juice daily on empty stomach for immune support</li>
+          <li>Use Giloy powder with warm water to increase white blood cell count</li>
+          <li>Combine with turmeric for enhanced anti-inflammatory and immune benefits</li>
+          <li>Regular use helps prevent recurrent infections and seasonal illnesses</li>
+        </ul>
+      </div>
+
+      <div class="usage-content" id="fever">
+        <h3 style="color: var(--primary-green); text-align: center; margin-bottom: 20px;">🔥 Fever & Infection Control</h3>
+        <ul>
+          <li>Effective in reducing high fever in dengue, malaria, and viral infections</li>
+          <li>Take Giloy decoction every 4-6 hours during fever episodes</li>
+          <li>Combines well with tulsi for respiratory infections and flu symptoms</li>
+          <li>Helps increase platelet count in dengue fever patients</li>
+        </ul>
+      </div>
+
+      <div class="usage-content" id="digestive">
+        <h3 style="color: var(--primary-green); text-align: center; margin-bottom: 20px;">🩸 Digestive Wellness</h3>
+        <ul>
+          <li>Improves digestion and treats acidity, constipation, and indigestion</li>
+          <li>Enhances appetite and promotes healthy gut flora</li>
+          <li>Useful in managing irritable bowel syndrome and other digestive disorders</li>
+          <li>Supports liver function and helps detoxify the digestive system</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Back Button -->
+    <div style="text-align: center;">
+      <a href="home.html" class="back-btn">
+        <span>←</span>
+        Back to Herbal Garden
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Herbal Knowledge Garden | Giloy — The Root of Immortality 🌿</p>
+  </footer>
+
+  <script>
+    // Initialize the page with animations
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeScrollAnimations();
+      initializeUsageTabs();
+      
+      // Add smooth scrolling for the scroll indicator
+      document.querySelector('.scroll-indicator').addEventListener('click', function() {
+        document.querySelector('.plant-page').scrollIntoView({ 
+          behavior: 'smooth' 
+        });
+      });
+    });
+
+    // Scroll animations for elements
+    function initializeScrollAnimations() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      // Observe all animated elements
+      document.querySelectorAll('.benefit-card, .benefits-list li, .growth-stage').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Usage Tabs Functionality
+    function initializeUsageTabs() {
+      const tabs = document.querySelectorAll('.usage-tab');
+      const contents = document.querySelectorAll('.usage-content');
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabId = this.dataset.tab;
+          
+          // Update active tab
+          tabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show corresponding content
+          contents.forEach(content => {
+            content.classList.remove('active');
+            if (content.id === tabId) {
+              content.classList.add('active');
+            }
+          });
+        });
+      });
+    }
+
+    // Remove the parallax effect that was causing the issue
+    // The main content will now stay in place when scrolling
+  </script>
+</body>
+</html>

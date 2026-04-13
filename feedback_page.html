@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share Your Thoughts - Herbal Knowledge Garden</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Marcellus&display=swap');
+
+    :root {
+      --primary-green: #2e5933;
+      --secondary-green: #6ca96d;
+      --accent-green: #81C784;
+      --light-green: #e8f5e9;
+      --cream: #f9f7f0;
+      --text-dark: #2b3d2b;
+      --text-light: #5a735c;
+      --white: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8fbf5 0%, #e8f5e9 50%, #f0f7f0 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .feedback-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header Styles */
+    .feedback-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-top: 40px;
+    }
+
+    .header-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .feedback-header h1 {
+      font-family: 'Marcellus', serif;
+      font-size: 2.5rem;
+      color: var(--primary-green);
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .feedback-header p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    /* Form Container */
+    .form-container {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 40px 35px;
+      box-shadow: 
+        0 10px 40px var(--shadow),
+        0 0 0 1px rgba(108, 169, 109, 0.1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-green), var(--secondary-green), var(--accent-green));
+    }
+
+    /* Form Group Styles */
+    .form-group {
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary-green);
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #e8efe9;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      background: var(--cream);
+      transition: all 0.3s ease;
+      color: var(--text-dark);
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--secondary-green);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(108, 169, 109, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.5;
+    }
+
+    /* Rating System */
+    .rating-group {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .rating-label {
+      display: block;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: var(--primary-green);
+    }
+
+    .rating-stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .star {
+      font-size: 2rem;
+      cursor: pointer;
+      color: #e0e0e0;
+      transition: all 0.2s ease;
+      filter: grayscale(1);
+    }
+
+    .star:hover,
+    .star.active {
+      color: #FFD700;
+      filter: grayscale(0);
+      transform: scale(1.2);
+    }
+
+    .rating-text {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-top: 5px;
+    }
+
+    /* Checkbox Group */
+    .checkbox-group {
+      display: grid;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 12px 15px;
+      border-radius: 12px;
+      background: var(--cream);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .checkbox-label:hover {
+      background: var(--light-green);
+      border-color: var(--accent-green);
+    }
+
+    .checkbox-input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--secondary-green);
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+      color: var(--white);
+      border: none;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(108, 169, 109, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* Response Message */
+    .response-message {
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 16px;
+      background: var(--light-green);
+      border: 2px solid var(--accent-green);
+      color: var(--primary-green);
+      font-weight: 500;
+      display: none;
+      animation: slideUp 0.5s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Back Button */
+    .back-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 25px;
+      background: var(--white);
+      color: var(--primary-green);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--shadow);
+      border: 2px solid transparent;
+    }
+
+    .back-btn:hover {
+      background: var(--secondary-green);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(108, 169, 109, 0.2);
+    }
+
+    /* Footer */
+    .feedback-footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 30px 20px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Decorative Elements */
+    .leaf-decoration {
+      position: absolute;
+      opacity: 0.1;
+      font-size: 8rem;
+      z-index: 0;
+    }
+
+    .leaf-1 {
+      top: -30px;
+      right: -30px;
+      transform: rotate(45deg);
+    }
+
+    .leaf-2 {
+      bottom: -40px;
+      left: -30px;
+      transform: rotate(-135deg);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .feedback-container {
+        padding: 15px;
+      }
+
+      .feedback-header h1 {
+        font-size: 2rem;
+      }
+
+      .header-icon {
+        font-size: 3rem;
+      }
+
+      .form-container {
+        padding: 30px 25px;
+      }
+
+      .form-input, .form-textarea, .form-select {
+        padding: 14px 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .feedback-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .form-container {
+        padding: 25px 20px;
+      }
+
+      .rating-stars {
+        gap: 5px;
+      }
+
+      .star {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* Animation for form elements */
+    .form-group {
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="feedback-container">
+    <!-- Header -->
+    <div class="feedback-header">
+      <span class="header-icon">💬</span>
+      <h1>Share Your Thoughts</h1>
+      <p>We'd love to hear about your experience with our herbal resources</p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+      <!-- Decorative Leaves -->
+      <div class="leaf-decoration leaf-1">🌿</div>
+      <div class="leaf-decoration leaf-2">🍃</div>
+
+      <form id="feedbackForm">
+        <!-- Name -->
+        <div class="form-group">
+          <label class="form-label" for="name">Your Name</label>
+          <input type="text" id="name" class="form-input" placeholder="Enter your full name" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="your.email@example.com" required>
+        </div>
+
+        <!-- Feedback Type -->
+        <div class="form-group">
+          <label class="form-label" for="feedbackType">Type of Feedback</label>
+          <select id="feedbackType" class="form-select" required>
+            <option value="">Select feedback type</option>
+            <option value="suggestion">Suggestion</option>
+            <option value="compliment">Compliment</option>
+            <option value="issue">Issue Report</option>
+            <option value="question">Question</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <!-- Rating -->
+        <div class="rating-group">
+          <label class="rating-label">How would you rate your experience?</label>
+          <div class="rating-stars" id="ratingStars">
+            <span class="star" data-rating="1">⭐</span>
+            <span class="star" data-rating="2">⭐</span>
+            <span class="star" data-rating="3">⭐</span>
+            <span class="star" data-rating="4">⭐</span>
+            <span class="star" data-rating="5">⭐</span>
+          </div>
+          <div class="rating-text" id="ratingText">Tap to rate</div>
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label class="form-label" for="message">Your Message</label>
+          <textarea id="message" class="form-textarea" placeholder="Please share your thoughts, suggestions, or questions in detail..." required></textarea>
+        </div>
+
+        <!-- Checkboxes -->
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox-input" id="newsletter">
+            <span>Send me updates about new herbs and features</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox-input" id="contactPermission">
+            <span>I'm open to follow-up questions about my feedback</span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">
+          <span>Send Your Feedback</span>
+        </button>
+
+        <!-- Response Message -->
+        <div class="response-message" id="responseMessage"></div>
+      </form>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-container">
+      <a href="home.html" class="back-btn">
+        <span>←</span>
+        Back to Garden
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="feedback-footer">
+      <p>© 2025 Herbal Knowledge Garden | Your voice helps us grow 🌱</p>
+    </div>
+  </div>
+
+  <script>
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeStarRating();
+      setupFormSubmission();
+    });
+
+    // Star Rating System
+    function initializeStarRating() {
+      const stars = document.querySelectorAll('.star');
+      const ratingText = document.getElementById('ratingText');
+      
+      const ratingMessages = {
+        1: "Poor - Needs significant improvement",
+        2: "Fair - Has some issues",
+        3: "Good - Meets expectations", 
+        4: "Very Good - Exceeds expectations",
+        5: "Excellent - Outstanding experience"
+      };
+
+      let currentRating = 0;
+
+      stars.forEach(star => {
+        star.addEventListener('click', function() {
+          const rating = parseInt(this.dataset.rating);
+          currentRating = rating;
+          
+          // Update stars
+          stars.forEach((s, index) => {
+            if (index < rating) {
+              s.classList.add('active');
+            } else {
+              s.classList.remove('active');
+            }
+          });
+          
+          // Update text
+          ratingText.textContent = ratingMessages[rating];
+        });
+
+        star.addEventListener('mouseenter', function() {
+          const hoverRating = parseInt(this.dataset.rating);
+          stars.forEach((s, index) => {
+            if (index < hoverRating) {
+              s.style.color = '#FFD700';
+              s.style.filter = 'grayscale(0)';
+            }
+          });
+        });
+
+        star.addEventListener('mouseleave', function() {
+          stars.forEach((s, index) => {
+            if (index >= currentRating) {
+              s.style.color = '';
+              s.style.filter = 'grayscale(1)';
+            }
+          });
+        });
+      });
+    }
+
+    // Form Submission
+    function setupFormSubmission() {
+      const form = document.getElementById('feedbackForm');
+      const responseMessage = document.getElementById('responseMessage');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const feedbackType = document.getElementById('feedbackType').value;
+        const message = document.getElementById('message').value;
+        const stars = document.querySelectorAll('.star.active').length;
+        
+        // Validate required fields
+        if (!name || !email || !feedbackType || !message) {
+          showResponse('Please fill in all required fields.', 'error');
+          return;
+        }
+
+        if (stars === 0) {
+          showResponse('Please provide a rating for your experience.', 'error');
+          return;
+        }
+
+        // Simulate form submission
+        const submitBtn = form.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = 'Sending...';
+        submitBtn.disabled = true;
+
+        // Simulate API call delay
+        setTimeout(() => {
+          // Show success message
+          showResponse(`Thank you, ${name}! Your feedback has been received. We appreciate you helping us improve our herbal garden. 🌿`, 'success');
+          
+          // Reset form
+          form.reset();
+          resetStarRating();
+          
+          // Restore button
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }, 2000);
+      });
+    }
+
+    // Show response message
+    function showResponse(message, type) {
+      const responseMessage = document.getElementById('responseMessage');
+      responseMessage.textContent = message;
+      responseMessage.style.display = 'block';
+      
+      // Set styles based on type
+      if (type === 'error') {
+        responseMessage.style.background = '#FFEBEE';
+        responseMessage.style.borderColor = '#F44336';
+        responseMessage.style.color = '#C62828';
+      } else {
+        responseMessage.style.background = '#E8F5E9';
+        responseMessage.style.borderColor = '#4CAF50';
+        responseMessage.style.color = '#2E7D32';
+      }
+      
+      // Auto-hide after 5 seconds for success messages
+      if (type === 'success') {
+        setTimeout(() => {
+          responseMessage.style.display = 'none';
+        }, 5000);
+      }
+    }
+
+    // Reset star rating
+    function resetStarRating() {
+      const stars = document.querySelectorAll('.star');
+      const ratingText = document.getElementById('ratingText');
+      
+      stars.forEach(star => {
+        star.classList.remove('active');
+        star.style.color = '';
+        star.style.filter = 'grayscale(1)';
+      });
+      
+      ratingText.textContent = 'Tap to rate';
+    }
+
+    // Add some interactive animations
+    document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(element => {
+      element.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'scale(1.02)';
+      });
+      
+      element.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>

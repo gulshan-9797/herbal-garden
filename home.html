@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌿 Herbal Knowledge Garden 🌿</title>
+  <style>
+    /* --------------------------
+       GLOBAL STYLES
+    -------------------------- */
+    :root {
+      --primary-green: #2e5933;
+      --secondary-green: #6ca96d;
+      --light-green: #e8f9e9;
+      --text-dark: #2b3d2b;
+      --white: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f8fbf5;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    h1, h2, p {
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* --------------------------
+       HEADER SECTION WITH ANIMATION
+    -------------------------- */
+    header.hero {
+      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+      color: var(--white);
+      text-align: center;
+      padding: 80px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('https://www.transparenttextures.com/patterns/green-gobbler.png');
+      opacity: 0.1;
+    }
+
+    .floating-herbs {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.3;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .herb1 { top: 20%; left: 10%; animation-delay: 0s; }
+    .herb2 { top: 60%; right: 15%; animation-delay: 2s; }
+    .herb3 { bottom: 30%; left: 20%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    header.hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      z-index: 1;
+      position: relative;
+      margin-bottom: 15px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    header.hero p {
+      font-size: 1.3rem;
+      z-index: 1;
+      position: relative;
+      color: #f0f9f0;
+      animation: fadeInUp 1s ease-out 0.3s both;
+      margin-bottom: 30px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --------------------------
+       QUICK ACTION BUTTONS
+    -------------------------- */
+    .quick-actions {
+      background: var(--white);
+      padding: 20px;
+      border-bottom: 2px solid var(--light-green);
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .action-btn {
+      padding: 12px 25px;
+      background: var(--light-green);
+      color: var(--primary-green);
+      border: 2px solid var(--secondary-green);
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-btn:hover {
+      background: var(--secondary-green);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* --------------------------
+       SEARCH AND FILTER SECTION
+    -------------------------- */
+    .search-section {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .search-container {
+      background: var(--white);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #searchInput {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    #searchInput:focus {
+      border-color: var(--secondary-green);
+      box-shadow: 0 0 0 3px rgba(108, 169, 109, 0.1);
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      border: 2px solid var(--secondary-green);
+      background: transparent;
+      color: var(--primary-green);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--secondary-green);
+      color: var(--white);
+    }
+
+    /* --------------------------
+       ENHANCED PLANT GRID
+    -------------------------- */
+    main.menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
+      background-color: #f4f8f2;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      background: var(--white);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.08);
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.3rem;
+      color: var(--primary-green);
+    }
+
+    .card .latin-name {
+      color: #666;
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .card .benefits {
+      color: #4b694b;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .herb-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .herb-tag {
+      background: var(--light-green);
+      color: var(--primary-green);
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .quick-tip {
+      background: #fff8e1;
+      border-left: 4px solid #ffd54f;
+      padding: 10px 15px;
+      margin-top: 15px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 100, 0, 0.15);
+    }
+
+    /* --------------------------
+       NO RESULTS MESSAGE
+    -------------------------- */
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--primary-green);
+    }
+
+    .no-results h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    /* --------------------------
+       FOOTER SECTION
+    -------------------------- */
+    footer {
+      background: var(--primary-green);
+      color: var(--white);
+      text-align: center;
+      padding: 40px 25px;
+      font-size: 1rem;
+      border-top: 4px solid #345334;
+    }
+
+    .feedback-btn {
+      display: inline-block;
+      background: var(--white);
+      color: var(--primary-green);
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .feedback-btn:hover {
+      background: var(--secondary-green);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* --------------------------
+       MODAL STYLES
+    -------------------------- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      position: relative;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+      color: white;
+      padding: 25px 30px;
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .close-modal:hover {
+      transform: rotate(90deg);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-content {
+      padding: 30px;
+    }
+
+    /* --------------------------
+       COMPARE HERBS MODAL SPECIFIC STYLES
+    -------------------------- */
+    /* Selection Interface */
+    .selection-interface {
+      background: var(--white);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 25px;
+    }
+
+    .herb-selectors {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .vs-badge {
+      background: var(--primary-green);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .herb-selector {
+      text-align: center;
+    }
+
+    .selector-label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: var(--primary-green);
+    }
+
+    .herb-dropdown {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: var(--white);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .herb-dropdown:focus {
+      border-color: var(--secondary-green);
+      box-shadow: 0 0 0 3px rgba(108, 169, 109, 0.1);
+    }
+
+    .quick-selection {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .quick-select-btn {
+      padding: 8px 16px;
+      border: 2px solid var(--secondary-green);
+      background: transparent;
+      color: var(--primary-green);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .quick-select-btn:hover {
+      background: var(--secondary-green);
+      color: var(--white);
+    }
+
+    .compare-btn {
+      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+      color: var(--white);
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 100, 0, 0.2);
+      margin: 20px auto 0;
+      display: block;
+    }
+
+    .compare-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 100, 0, 0.3);
+    }
+
+    .compare-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Comparison Results */
+    .comparison-results {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .comparison-results.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .herb-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .comparison-herb-card {
+      background: var(--white);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .comparison-herb-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .herb-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .herb-card-content {
+      padding: 20px;
+    }
+
+    .herb-name {
+      font-size: 1.5rem;
+      margin: 0 0 5px 0;
+      color: var(--primary-green);
+    }
+
+    .latin-name {
+      font-style: italic;
+      color: #666;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .herb-benefits {
+      line-height: 1.6;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+
+    .herb-details {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 0.9rem;
+    }
+
+    .detail-value {
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--light-green);
+      color: var(--primary-green);
+      border-radius: 12px;
+      font-size: 0.75rem;
+      margin: 2px;
+    }
+
+    /* Comparison Matrix */
+    .comparison-matrix {
+      background: var(--white);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 25px;
+    }
+
+    .matrix-title {
+      text-align: center;
+      font-size: 1.3rem;
+      color: var(--primary-green);
+      margin-bottom: 20px;
+    }
+
+    .matrix-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .matrix-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 2fr;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .matrix-row:hover {
+      background: var(--light-green);
+    }
+
+    .matrix-category {
+      font-weight: 700;
+      color: var(--primary-green);
+      font-size: 0.9rem;
+    }
+
+    .matrix-value {
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .matrix-value.herb-1 {
+      background: rgba(76, 175, 80, 0.1);
+      border-left: 4px solid #4CAF50;
+    }
+
+    .matrix-value.herb-2 {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196F3;
+    }
+
+    /* Recommendations */
+    .recommendations {
+      background: var(--white);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .recommendation-card {
+      background: var(--light-green);
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--secondary-green);
+    }
+
+    .recommendation-card h4 {
+      margin: 0 0 8px 0;
+      color: var(--primary-green);
+      font-size: 1.1rem;
+    }
+
+    .recommendation-card p {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 30px;
+      color: var(--primary-green);
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--secondary-green);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* --------------------------
+       SEASONAL PICKS MODAL SPECIFIC STYLES
+    -------------------------- */
+    .seasonal-container {
+      max-width: 100%;
+    }
+
+    /* Season Navigation */
+    .season-nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .season-card {
+      background: #ffffffda;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      text-decoration: none;
+      color: #1d3b1f;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .season-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 100, 0, 0.2);
+      border-color: #6ca96d;
+    }
+
+    .season-card.active {
+      border-color: #2e5933;
+      background: linear-gradient(135deg, #ffffff, #f5fff7);
+    }
+
+    .season-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .season-title {
+      font-size: 1.5rem;
+      margin: 0 0 10px 0;
+      color: #2e5933;
+    }
+
+    .season-count {
+      color: #4b694b;
+      font-size: 0.9rem;
+    }
+
+    /* Current Season Highlight */
+    .current-season {
+      background: #ffffffda;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      text-align: center;
+      border-left: 4px solid #6ca96d;
+    }
+
+    .season-badge {
+      background: linear-gradient(135deg, #2e5933, #6ca96d);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    /* Seasonal Sections */
+    .season-section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .season-section.active {
+      display: block;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #b9e5c2;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      color: #2e5933;
+      margin: 0 0 10px 0;
+    }
+
+    .section-subtitle {
+      color: #4b694b;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    /* Herb Grid */
+    .seasonal-herb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .seasonal-herb-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      background: #ffffff;
+    }
+
+    .seasonal-herb-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .seasonal-herb-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .seasonal-herb-info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 18px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      transition: background 0.3s ease;
+    }
+
+    .seasonal-herb-card:hover .seasonal-herb-info {
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .seasonal-herb-info h3 {
+      margin: 5px 0;
+      font-size: 1.2rem;
+      color: #2e5933;
+    }
+
+    .seasonal-herb-info p {
+      font-size: 0.9rem;
+      color: #4b694b;
+      margin-bottom: 10px;
+    }
+
+    .season-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, #2e5933, #6ca96d);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .seasonal-herb-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0, 100, 0, 0.2);
+    }
+
+    /* Seasonal Tips */
+    .seasonal-tips {
+      background: #ffffffda;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+
+    .tips-title {
+      font-size: 1.3rem;
+      color: #2e5933;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .tip-card {
+      background: linear-gradient(120deg, #e4f5e6, #f5fff7);
+      padding: 18px;
+      border-radius: 12px;
+      border-left: 4px solid #6ca96d;
+    }
+
+    .tip-card h4 {
+      margin: 0 0 8px 0;
+      color: #2e5933;
+      font-size: 1rem;
+    }
+
+    .tip-card p {
+      margin: 0;
+      color: #4b694b;
+      line-height: 1.6;
+      font-size: 0.85rem;
+    }
+
+    /* --------------------------
+       RESPONSIVE DESIGN
+    -------------------------- */
+    @media (max-width: 768px) {
+      header.hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      header.hero p {
+        font-size: 1.1rem;
+      }
+      
+      .search-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      #searchInput {
+        min-width: 100%;
+      }
+      
+      main.menu {
+        padding: 30px 15px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .action-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+
+      /* Modal Responsive */
+      .modal-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .herb-selectors {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .vs-badge {
+        order: -1;
+        margin: 0 auto;
+      }
+      
+      .herb-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .matrix-row {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      /* Seasonal Picks Responsive */
+      .season-nav {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .seasonal-herb-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      main.menu {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+
+      .modal-header {
+        padding: 20px;
+      }
+
+      .selection-interface {
+        padding: 20px;
+      }
+
+      .season-nav {
+        grid-template-columns: 1fr;
+      }
+      
+      .seasonal-herb-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="floating-herbs herb1">🌿</div>
+    <div class="floating-herbs herb2">🍃</div>
+    <div class="floating-herbs herb3">🌱</div>
+    
+    <h1>🌿 Herbal Knowledge Garden 🌿</h1>
+    <p>Discover the healing power of nature — one plant at a time.</p>
+  </header>
+
+  <!-- Quick Action Buttons -->
+  <section class="quick-actions">
+    <div class="action-buttons">
+      <button class="action-btn" onclick="showHerbComparison()">
+        ⚖️ Compare Herbs
+      </button>
+      <button class="action-btn" onclick="showSeasonalPicks()">
+        🍂 Seasonal Picks
+      </button>
+    </div>
+  </section>
+
+  <!-- Search and Filter Section -->
+  <section class="search-section">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="🔍 Search herbs by name, benefit, or use..." />
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All Herbs</button>
+        <button class="filter-btn" data-filter="immunity">Immunity</button>
+        <button class="filter-btn" data-filter="digestion">Digestion</button>
+        <button class="filter-btn" data-filter="skin">Skin Care</button>
+        <button class="filter-btn" data-filter="stress">Stress Relief</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced Plant Grid -->
+  <main class="menu" id="herbGrid">
+    <!-- Cards will be populated by JavaScript -->
+  </main>
+
+  <footer>
+    <p>© 2025 Herbal Knowledge Garden | Connecting Nature's Wisdom with Modern Wellness</p>
+    <a href="feedback_page.html" class="feedback-btn">💬 Share Your Feedback</a>
+  </footer>
+
+  <!-- Compare Herbs Modal -->
+  <div class="modal-overlay" id="compareModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>⚖️ Compare Herbs</h2>
+        <button class="close-modal" id="closeCompareModal">×</button>
+      </div>
+      <div class="modal-content">
+        <!-- Selection Interface -->
+        <div class="selection-interface">
+          <div class="herb-selectors">
+            <div class="herb-selector">
+              <span class="selector-label">Select First Herb</span>
+              <select class="herb-dropdown" id="herb1Select">
+                <option value="">Choose a herb...</option>
+              </select>
+            </div>
+            
+            <div class="vs-badge">VS</div>
+            
+            <div class="herb-selector">
+              <span class="selector-label">Select Second Herb</span>
+              <select class="herb-dropdown" id="herb2Select">
+                <option value="">Choose a herb...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="quick-selection">
+            <span style="font-weight: 600; margin-right: 10px;">Quick Compare:</span>
+            <button class="quick-select-btn" data-herb1="Tulsi" data-herb2="Ashwagandha">Stress Relief</button>
+            <button class="quick-select-btn" data-herb1="Turmeric" data-herb2="Ginger">Inflammation</button>
+            <button class="quick-select-btn" data-herb1="Neem" data-herb2="Aloe Vera">Skin Care</button>
+            <button class="quick-select-btn" data-herb1="Amla" data-herb2="Giloy">Immunity</button>
+          </div>
+
+          <button class="compare-btn" id="compareBtn" disabled>Compare Herbs</button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          Analyzing herb properties...
+        </div>
+
+        <!-- Comparison Results -->
+        <div class="comparison-results" id="comparisonResults">
+          <!-- Herb Cards -->
+          <div class="herb-cards" id="herbCards">
+            <!-- Dynamic content will be inserted here -->
+          </div>
+
+          <!-- Comparison Matrix -->
+          <div class="comparison-matrix">
+            <h3 class="matrix-title">Detailed Comparison</h3>
+            <div class="matrix-grid" id="comparisonMatrix">
+              <!-- Dynamic content will be inserted here -->
+            </div>
+          </div>
+
+          <!-- Recommendations -->
+          <div class="recommendations">
+            <h3 style="text-align: center; color: var(--primary-green); margin-bottom: 25px;">💡 Expert Recommendations</h3>
+            <div id="recommendationsContent">
+              <!-- Dynamic content will be inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seasonal Picks Modal -->
+  <div class="modal-overlay" id="seasonalModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>🍂 Seasonal Herb Picks</h2>
+        <button class="close-modal" id="closeSeasonalModal">×</button>
+      </div>
+      <div class="modal-content">
+        <div class="seasonal-container">
+          <!-- Current Season Highlight -->
+          <div class="current-season">
+            <span class="season-badge" id="currentSeasonBadge">🌱 Current Season: Loading...</span>
+            <p id="currentSeasonDesc">Discover herbs that are perfect for the current season's needs and growing conditions.</p>
+          </div>
+
+          <!-- Season Navigation -->
+          <div class="season-nav">
+            <div class="season-card active" data-season="spring">
+              <span class="season-icon">🌷</span>
+              <h3 class="season-title">Spring</h3>
+              <p class="season-count" id="springCount">0 herbs</p>
+            </div>
+            
+            <div class="season-card" data-season="summer">
+              <span class="season-icon">☀️</span>
+              <h3 class="season-title">Summer</h3>
+              <p class="season-count" id="summerCount">0 herbs</p>
+            </div>
+            
+            <div class="season-card" data-season="autumn">
+              <span class="season-icon">🍂</span>
+              <h3 class="season-title">Autumn</h3>
+              <p class="season-count" id="autumnCount">0 herbs</p>
+            </div>
+            
+            <div class="season-card" data-season="winter">
+              <span class="season-icon">❄️</span>
+              <h3 class="season-title">Winter</h3>
+              <p class="season-count" id="winterCount">0 herbs</p>
+            </div>
+          </div>
+
+          <!-- Spring Section -->
+          <div class="season-section active" id="springSection">
+            <div class="section-header">
+              <h2 class="section-title">Spring Herbs</h2>
+              <p class="section-subtitle">Renewal, detoxification, and fresh beginnings</p>
+            </div>
+            
+            <div class="seasonal-herb-grid" id="springHerbs">
+              <!-- Spring herbs will be loaded here -->
+            </div>
+            
+            <div class="seasonal-tips">
+              <h3 class="tips-title">🌱 Spring Growing Tips</h3>
+              <div class="tips-grid">
+                <div class="tip-card">
+                  <h4>Start Seeds Indoors</h4>
+                  <p>Begin herbs like Tulsi and Neem indoors 6-8 weeks before the last frost for strong spring planting.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Soil Preparation</h4>
+                  <p>Enrich soil with compost and ensure good drainage for healthy root development as plants awaken.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Gradual Acclimation</h4>
+                  <p>Slowly introduce indoor-started herbs to outdoor conditions over 7-10 days to prevent shock.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summer Section -->
+          <div class="season-section" id="summerSection">
+            <div class="section-header">
+              <h2 class="section-title">Summer Herbs</h2>
+              <p class="section-subtitle">Cooling, hydration, and sun protection</p>
+            </div>
+            
+            <div class="seasonal-herb-grid" id="summerHerbs">
+              <!-- Summer herbs will be loaded here -->
+            </div>
+            
+            <div class="seasonal-tips">
+              <h3 class="tips-title">☀️ Summer Growing Tips</h3>
+              <div class="tips-grid">
+                <div class="tip-card">
+                  <h4>Morning Watering</h4>
+                  <p>Water deeply in early morning to reduce evaporation and prevent fungal diseases in humid conditions.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Provide Shade</h4>
+                  <p>Use shade cloth for delicate herbs during peak afternoon sun to prevent scorching.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Regular Harvesting</h4>
+                  <p>Frequent harvesting encourages bushier growth and prevents plants from going to seed too early.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Autumn Section -->
+          <div class="season-section" id="autumnSection">
+            <div class="section-header">
+              <h2 class="section-title">Autumn Herbs</h2>
+              <p class="section-subtitle">Immunity building and preparation for colder months</p>
+            </div>
+            
+            <div class="seasonal-herb-grid" id="autumnHerbs">
+              <!-- Autumn herbs will be loaded here -->
+            </div>
+            
+            <div class="seasonal-tips">
+              <h3 class="tips-title">🍂 Autumn Growing Tips</h3>
+              <div class="tips-grid">
+                <div class="tip-card">
+                  <h4>Root Harvest Time</h4>
+                  <p>Autumn is ideal for harvesting root herbs like Ashwagandha when plant energy is concentrated below ground.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Protect from Frost</h4>
+                  <p>Cover tender herbs or bring pots indoors when frost warnings are issued to extend growing season.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Preserve Your Harvest</h4>
+                  <p>Dry or freeze abundant autumn harvests to ensure winter supply of your favorite medicinal herbs.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Winter Section -->
+          <div class="season-section" id="winterSection">
+            <div class="section-header">
+              <h2 class="section-title">Winter Herbs</h2>
+              <p class="section-subtitle">Warming, indoor gardening, and immune support</p>
+            </div>
+            
+            <div class="seasonal-herb-grid" id="winterHerbs">
+              <!-- Winter herbs will be loaded here -->
+            </div>
+            
+            <div class="seasonal-tips">
+              <h3 class="tips-title">❄️ Winter Growing Tips</h3>
+              <div class="tips-grid">
+                <div class="tip-card">
+                  <h4>Indoor Herb Garden</h4>
+                  <p>Grow herbs like Ginger and Turmeric indoors near south-facing windows for adequate winter light.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Reduce Watering</h4>
+                  <p>Most herbs need less water in winter. Allow soil to dry slightly between waterings to prevent root rot.</p>
+                </div>
+                <div class="tip-card">
+                  <h4>Plan Next Season</h4>
+                  <p>Use winter months to plan your spring garden, order seeds, and prepare for the upcoming growing season.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Enhanced herb data with more practical information
+    const herbs = [
+      {
+        name: "Tulsi (Holy Basil)",
+        latin: "Ocimum tenuiflorum",
+        image: "https://5.imimg.com/data5/SELLER/Default/2025/6/520415475/DE/DH/KR/180399452/tulsi-plant-500x500.jpeg",
+        benefits: "Adaptogenic herb for stress relief and immunity",
+        link: "tulsi.html",
+        tags: ["immunity", "stress", "respiratory"],
+        quickTip: "Brew as tea daily for stress management",
+        difficulty: "Easy to grow",
+        season: "Year-round"
+      },
+      {
+        name: "Neem",
+        latin: "Azadirachta indica",
+        image: "https://rukminim2.flixcart.com/image/480/640/xif0q/shopsy-plant-sapling/p/d/c/perennial-yes-yes-green-neem-plant-pack-of-1-1-alogardening-original-imahy9cth2v38wy9.jpeg?q=90",
+        benefits: "Powerful antibacterial & blood purifier",
+        link: "neem.html",
+        tags: ["skin", "immunity", "detox"],
+        quickTip: "Use neem oil for skin conditions",
+        difficulty: "Moderate",
+        season: "Spring/Summer"
+      },
+      {
+        name: "Aloe Vera",
+        latin: "Aloe barbadensis miller",
+        image: "https://m.media-amazon.com/images/I/81XWpVvk5AL.jpg",
+        benefits: "Soothes burns, aids digestion & hydrates skin",
+        link: "aloe_vera.html",
+        tags: ["skin", "digestion", "hydration"],
+        quickTip: "Apply fresh gel directly to sunburns",
+        difficulty: "Very easy",
+        season: "Year-round"
+      },
+      {
+        name: "Ashwagandha",
+        latin: "Withania somnifera",
+        image: "https://m.media-amazon.com/images/I/41U1Uz5Q9HL._AC_UF1000,1000_QL80_.jpg",
+        benefits: "Reduces anxiety & increases vitality",
+        link: "ashwagandha.html",
+        tags: ["stress", "immunity", "energy"],
+        quickTip: "Take with warm milk before bed",
+        difficulty: "Moderate",
+        season: "Autumn"
+      },
+      {
+        name: "Turmeric",
+        latin: "Curcuma longa",
+        image: "https://i.herbalreality.com/wp-content/uploads/2023/11/22183558/Fresh-turmeric-root-Curcuma-longa-scaled-1300x867.jpg",
+        benefits: "Natural anti-inflammatory & antioxidant",
+        link: "turmeric.html",
+        tags: ["immunity", "inflammation", "joints"],
+        quickTip: "Combine with black pepper for absorption",
+        difficulty: "Easy",
+        season: "Year-round"
+      },
+      {
+        name: "Ginger",
+        latin: "Zingiber officinale",
+        image: "https://housing.com/news/wp-content/uploads/2022/11/ginger-plant-compressed.jpg",
+        benefits: "Aids digestion & relieves nausea",
+        link: "ginger.html",
+        tags: ["digestion", "immunity", "nausea"],
+        quickTip: "Fresh ginger tea for morning sickness",
+        difficulty: "Easy",
+        season: "Year-round"
+      },
+      {
+        name: "Amla",
+        latin: "Phyllanthus emblica",
+        image: "https://malabardirect.com/cdn/shop/products/amla.jpg?v=1601753828",
+        benefits: "Rich in Vitamin C & boosts immunity",
+        link: "amla.html",
+        tags: ["immunity", "skin", "hair"],
+        quickTip: "Eat raw or as powder for maximum benefits",
+        difficulty: "Moderate",
+        season: "Winter"
+      },
+      {
+        name: "Peppermint",
+        latin: "Mentha piperita",
+        image: "https://bombayseeds.com/cdn/shop/files/Peppermint_6d729f40-2b9c-49d8-ab28-04905c0cc69c.jpg?v=1728889273",
+        benefits: "Relieves headaches & aids digestion",
+        link: "peppermint.html",
+        tags: ["digestion", "stress", "headache"],
+        quickTip: "Inhale essential oil for headache relief",
+        difficulty: "Very easy",
+        season: "Spring/Summer"
+      },
+      {
+        name: "Lemongrass",
+        latin: "Cymbopogon citratus",
+        image: "https://mainaamgarden.com/cdn/shop/products/Lemongrass_700x700.jpg?v=1702097618",
+        benefits: "Reduces anxiety & fights infections",
+        link: "lemongrass.html",
+        tags: ["stress", "immunity", "detox"],
+        quickTip: "Brew as tea for relaxation",
+        difficulty: "Easy",
+        season: "Summer"
+      },
+      {
+        name: "Giloy",
+        latin: "Tinospora cordifolia",
+        image: "https://m.media-amazon.com/images/I/51NkmzzMhdL._AC_UF1000,1000_QL80_.jpg",
+        benefits: "Boosts immunity & reduces fever",
+        link: "giloy.html",
+        tags: ["immunity", "fever", "detox"],
+        quickTip: "Take during seasonal changes for prevention",
+        difficulty: "Moderate",
+        season: "Monsoon"
+      },
+      // NEW HERBS ADDED BELOW
+      {
+        name: "Hibiscus",
+        latin: "Hibiscus rosa-sinensis",
+        image: "https://images8.alphacoders.com/117/1170296.jpg",
+        benefits: "Rich in antioxidants, supports hair growth & heart health",
+        link: "hibiscus.html",
+        tags: ["hair", "skin", "immunity"],
+        quickTip: "Use hibiscus tea for natural hair rinse",
+        difficulty: "Easy",
+        season: "Summer"
+      },
+      {
+        name: "Bhringraj",
+        latin: "Eclipta prostrata",
+        image: "https://dukaan.b-cdn.net/700x700/webp/media/d78f4f68-3732-4392-9592-fb7a3e174c20.jpg",
+        benefits: "Promotes hair growth, prevents premature graying",
+        link: "bhringraj.html",
+        tags: ["hair", "skin", "liver"],
+        quickTip: "Apply bhringraj oil overnight for best results",
+        difficulty: "Moderate",
+        season: "Monsoon"
+      },
+      {
+        name: "Coriander",
+        latin: "Coriandrum sativum",
+        image: "https://www.shutterstock.com/image-photo/coriander-leaves-vegetables-garden-health-600nw-1656506146.jpg",
+        benefits: "Aids digestion, cools body, rich in vitamins",
+        link: "coriander.html",
+        tags: ["digestion", "skin", "detox"],
+        quickTip: "Add fresh coriander to meals for digestive aid",
+        difficulty: "Very easy",
+        season: "Winter"
+      },
+      {
+        name: "Brahmi",
+        latin: "Bacopa monnieri",
+        image: "https://t3.ftcdn.net/jpg/16/99/17/98/360_F_1699179868_ujstFSXFJshUjzUMiaDvBDImujw3INLU.jpg",
+        benefits: "Enhances memory, reduces anxiety, promotes hair growth",
+        link: "brahmi.html",
+        tags: ["brain", "stress", "hair"],
+        quickTip: "Take brahmi with honey for cognitive benefits",
+        difficulty: "Easy",
+        season: "Year-round"
+      },
+      {
+        name: "Manjistha",
+        latin: "Rubia cordifolia",
+        image: "https://t3.ftcdn.net/jpg/09/95/66/98/360_F_995669868_OV4RlOaJoukVUjegzNHdJq96iC7AWcJm.jpg",
+        benefits: "Blood purifier, skin rejuvenator, anti-inflammatory",
+        link: "manjistha.html",
+        tags: ["skin", "blood", "detox"],
+        quickTip: "Use manjistha powder in face packs for glowing skin",
+        difficulty: "Moderate",
+        season: "Spring"
+      },
+      {
+        name: "Methi (Fenugreek)",
+        latin: "Trigonella foenum-graecum",
+        image: "https://media.istockphoto.com/id/880909002/photo/fenugreek-with-leaf-in-spoon-on-board.jpg?s=612x612&w=0&k=20&c=uQLkho2jynTkVQv1hZDKHjqkfZVHLMauY_E2ROQbovU=",
+        benefits: "Regulates blood sugar, aids lactation, promotes hair growth",
+        link: "methi.html",
+        tags: ["digestion", "hair", "blood"],
+        quickTip: "Soak fenugreek seeds overnight for maximum benefits",
+        difficulty: "Easy",
+        season: "Winter"
+      }
+    ];
+
+    // Comprehensive herb database for comparison
+    const herbsDetailed = [
+      {
+        id: "tulsi",
+        name: "Tulsi (Holy Basil)",
+        latin: "Ocimum tenuiflorum",
+        image: "https://5.imimg.com/data5/SELLER/Default/2025/6/520415475/DE/DH/KR/180399452/tulsi-plant-500x500.jpeg",
+        benefits: "Adaptogenic herb for stress relief and immunity",
+        description: "Sacred basil known as 'The Queen of Herbs' in Ayurveda, excellent for respiratory health and stress management.",
+        tags: ["adaptogen", "stress", "immunity", "respiratory"],
+        properties: {
+          potency: "Medium-High",
+          speed: "Moderate",
+          safety: "High",
+          taste: "Pungent, slightly bitter",
+          cost: "Low"
+        },
+        bestFor: ["Stress relief", "Respiratory issues", "Immunity boost"],
+        preparation: ["Tea", "Fresh leaves", "Powder"],
+        growing: {
+          difficulty: "Easy",
+          season: "Year-round",
+          climate: "Tropical/Subtropical"
+        },
+        precautions: "Generally safe, avoid during pregnancy"
+      },
+      {
+        id: "ashwagandha",
+        name: "Ashwagandha",
+        latin: "Withania somnifera",
+        image: "https://m.media-amazon.com/images/I/41U1Uz5Q9HL._AC_UF1000,1000_QL80_.jpg",
+        benefits: "Reduces anxiety and increases vitality",
+        description: "Powerful adaptogen that helps the body resist stress, improves sleep, and boosts energy levels.",
+        tags: ["adaptogen", "stress", "energy", "sleep"],
+        properties: {
+          potency: "High",
+          speed: "Slow",
+          safety: "Medium",
+          taste: "Bitter, earthy",
+          cost: "Medium"
+        },
+        bestFor: ["Chronic stress", "Insomnia", "Low energy"],
+        preparation: ["Powder", "Capsules", "Tincture"],
+        growing: {
+          difficulty: "Moderate",
+          season: "Autumn",
+          climate: "Dry regions"
+        },
+        precautions: "Avoid during pregnancy, may interact with sedatives"
+      },
+      {
+        id: "turmeric",
+        name: "Turmeric",
+        latin: "Curcuma longa",
+        image: "https://i.herbalreality.com/wp-content/uploads/2023/11/22183558/Fresh-turmeric-root-Curcuma-longa-scaled-1300x867.jpg",
+        benefits: "Natural anti-inflammatory and antioxidant",
+        description: "Golden spice with curcumin, a powerful compound that fights inflammation throughout the body.",
+        tags: ["anti-inflammatory", "antioxidant", "immunity", "joints"],
+        properties: {
+          potency: "Medium",
+          speed: "Moderate",
+          safety: "High",
+          taste: "Earthy, slightly bitter",
+          cost: "Low"
+        },
+        bestFor: ["Joint pain", "Inflammation", "Antioxidant support"],
+        preparation: ["Powder", "Fresh root", "Tea"],
+        growing: {
+          difficulty: "Easy",
+          season: "Year-round",
+          climate: "Tropical"
+        },
+        precautions: "High doses may cause stomach upset"
+      },
+      {
+        id: "ginger",
+        name: "Ginger",
+        latin: "Zingiber officinale",
+        image: "https://housing.com/news/wp-content/uploads/2022/11/ginger-plant-compressed.jpg",
+        benefits: "Aids digestion and relieves nausea",
+        description: "Warming root that stimulates digestion, reduces inflammation, and provides natural pain relief.",
+        tags: ["digestion", "nausea", "anti-inflammatory", "circulation"],
+        properties: {
+          potency: "Medium",
+          speed: "Fast",
+          safety: "High",
+          taste: "Spicy, warming",
+          cost: "Low"
+        },
+        bestFor: ["Digestive issues", "Nausea", "Inflammation"],
+        preparation: ["Fresh root", "Tea", "Powder"],
+        growing: {
+          difficulty: "Easy",
+          season: "Year-round",
+          climate: "Tropical/Subtropical"
+        },
+        precautions: "May interact with blood thinners"
+      },
+      {
+        id: "neem",
+        name: "Neem",
+        latin: "Azadirachta indica",
+        image: "https://rukminim2.flixcart.com/image/480/640/xif0q/shopsy-plant-sapling/p/d/c/perennial-yes-yes-green-neem-plant-pack-of-1-1-alogardening-original-imahy9cth2v38wy9.jpeg?q=90",
+        benefits: "Powerful antibacterial and detoxifier",
+        description: "Known as 'Village Pharmacy', excellent for skin conditions, blood purification, and dental health.",
+        tags: ["antibacterial", "skin", "detox", "dental"],
+        properties: {
+          potency: "High",
+          speed: "Moderate",
+          safety: "Medium",
+          taste: "Very bitter",
+          cost: "Low"
+        },
+        bestFor: ["Skin conditions", "Detoxification", "Oral health"],
+        preparation: ["Oil", "Paste", "Tea", "Capsules"],
+        growing: {
+          difficulty: "Moderate",
+          season: "Spring/Summer",
+          climate: "Tropical"
+        },
+        precautions: "Very bitter, use in moderation"
+      },
+      {
+        id: "aloevera",
+        name: "Aloe Vera",
+        latin: "Aloe barbadensis miller",
+        image: "https://m.media-amazon.com/images/I/81XWpVvk5AL.jpg",
+        benefits: "Heals skin and aids digestion",
+        description: "Soothing succulent with cooling properties, excellent for burns, skin hydration, and digestive health.",
+        tags: ["skin", "digestion", "cooling", "healing"],
+        properties: {
+          potency: "Medium",
+          speed: "Fast",
+          safety: "High",
+          taste: "Bitter (gel is neutral)",
+          cost: "Low"
+        },
+        bestFor: ["Skin healing", "Digestive issues", "Hydration"],
+        preparation: ["Gel", "Juice", "Creams"],
+        growing: {
+          difficulty: "Very easy",
+          season: "Year-round",
+          climate: "Arid/Subtropical"
+        },
+        precautions: "Some may be allergic to latex in skin"
+      },
+      {
+        id: "amla",
+        name: "Amla (Indian Gooseberry)",
+        latin: "Phyllanthus emblica",
+        image: "https://malabardirect.com/cdn/shop/products/amla.jpg?v=1601753828",
+        benefits: "Rich in Vitamin C and boosts immunity",
+        description: "Vitamin C powerhouse that supports immunity, hair growth, skin health, and eye function.",
+        tags: ["immunity", "vitamin-c", "hair", "skin"],
+        properties: {
+          potency: "High",
+          speed: "Moderate",
+          safety: "High",
+          taste: "Sour, astringent",
+          cost: "Medium"
+        },
+        bestFor: ["Immunity boost", "Hair health", "Skin care"],
+        preparation: ["Fresh fruit", "Powder", "Juice"],
+        growing: {
+          difficulty: "Moderate",
+          season: "Winter",
+          climate: "Subtropical"
+        },
+        precautions: "Very sour, may upset sensitive stomachs"
+      },
+      {
+        id: "giloy",
+        name: "Giloy",
+        latin: "Tinospora cordifolia",
+        image: "https://m.media-amazon.com/images/I/51NkmzzMhdL._AC_UF1000,1000_QL80_.jpg",
+        benefits: "Boosts immunity and reduces fever",
+        description: "Immunity-boosting vine that acts as powerful detoxifier and helps manage chronic fevers.",
+        tags: ["immunity", "fever", "detox", "adaptogen"],
+        properties: {
+          potency: "High",
+          speed: "Fast",
+          safety: "High",
+          taste: "Bitter",
+          cost: "Medium"
+        },
+        bestFor: ["Immunity", "Fever management", "Detoxification"],
+        preparation: ["Juice", "Powder", "Capsules"],
+        growing: {
+          difficulty: "Moderate",
+          season: "Monsoon",
+          climate: "Tropical"
+        },
+        precautions: "May lower blood sugar levels"
+      }
+    ];
+
+    // Seasonal data
+    const herbsBySeason = {
+      spring: [
+        {
+          name: "Neem",
+          latin: "Azadirachta indica",
+          image: "https://rukminim2.flixcart.com/image/480/640/xif0q/shopsy-plant-sapling/p/d/c/perennial-yes-yes-green-neem-plant-pack-of-1-1-alogardening-original-imahy9cth2v38wy9.jpeg?q=90",
+          benefits: "Powerful blood purifier & detoxifier",
+          link: "neem.html",
+          description: "Perfect for spring detoxification and skin purification"
+        },
+        {
+          name: "Tulsi (Holy Basil)",
+          latin: "Ocimum tenuiflorum",
+          image: "https://5.imimg.com/data5/SELLER/Default/2025/6/520415475/DE/DH/KR/180399452/tulsi-plant-500x500.jpeg",
+          benefits: "Boosts immunity & relieves stress",
+          link: "tulsi.html",
+          description: "Ideal for seasonal transition stress and respiratory health"
+        }
+      ],
+      summer: [
+        {
+          name: "Aloe Vera",
+          latin: "Aloe barbadensis miller",
+          image: "https://m.media-amazon.com/images/I/81XWpVvk5AL.jpg",
+          benefits: "Heals skin & aids digestion",
+          link: "aloe_vera.html",
+          description: "Cooling relief for summer sunburns and digestive issues"
+        },
+        {
+          name: "Peppermint",
+          latin: "Mentha piperita",
+          image: "https://bombayseeds.com/cdn/shop/files/Peppermint_6d729f40-2b9c-49d8-ab28-04905c0cc69c.jpg?v=1728889273",
+          benefits: "Relieves headaches & freshens breath",
+          link: "peppermint.html",
+          description: "Refreshing cooling herb for hot summer days"
+        },
+        {
+          name: "Lemongrass",
+          latin: "Cymbopogon citratus",
+          image: "https://mainaamgarden.com/cdn/shop/products/Lemongrass_700x700.jpg?v=1702097618",
+          benefits: "Fights infections & aids relaxation",
+          link: "lemongrass.html",
+          description: "Thrives in summer heat, perfect for cooling teas"
+        }
+      ],
+      autumn: [
+        {
+          name: "Ashwagandha",
+          latin: "Withania somnifera",
+          image: "https://m.media-amazon.com/images/I/41U1Uz5Q9HL._AC_UF1000,1000_QL80_.jpg",
+          benefits: "Reduces anxiety & increases strength",
+          link: "ashwagandha.html",
+          description: "Roots harvested in autumn for maximum potency"
+        },
+        {
+          name: "Giloy",
+          latin: "Tinospora cordifolia",
+          image: "https://m.media-amazon.com/images/I/51NkmzzMhdL._AC_UF1000,1000_QL80_.jpg",
+          benefits: "Improves immunity & reduces fever",
+          link: "giloy.html",
+          description: "Traditional monsoon and autumn immunity booster"
+        }
+      ],
+      winter: [
+        {
+          name: "Turmeric",
+          latin: "Curcuma longa",
+          image: "https://i.herbalreality.com/wp-content/uploads/2023/11/22183558/Fresh-turmeric-root-Curcuma-longa-scaled-1300x867.jpg",
+          benefits: "Natural anti-inflammatory & healer",
+          link: "turmeric.html",
+          description: "Warming spice perfect for winter inflammation"
+        },
+        {
+          name: "Ginger",
+          latin: "Zingiber officinale",
+          image: "https://housing.com/news/wp-content/uploads/2022/11/ginger-plant-compressed.jpg",
+          benefits: "Improves digestion & relieves nausea",
+          link: "ginger.html",
+          description: "Essential warming herb for cold weather"
+        },
+        {
+          name: "Amla",
+          latin: "Phyllanthus emblica",
+          image: "https://malabardirect.com/cdn/shop/products/amla.jpg?v=1601753828",
+          benefits: "Rich in Vitamin C & boosts immunity",
+          link: "amla.html",
+          description: "Winter fruit that helps prevent seasonal illnesses"
+        }
+      ]
+    };
+
+    // Season information
+    const seasonInfo = {
+      spring: {
+        name: "Spring",
+        icon: "🌷",
+        description: "Spring is the season of renewal and detoxification. Focus on herbs that support liver function, cleanse the blood, and help with seasonal allergies as nature awakens."
+      },
+      summer: {
+        name: "Summer", 
+        icon: "☀️",
+        description: "Summer brings heat and vitality. Emphasize cooling herbs that hydrate the body, protect from sun damage, and aid digestion during warm months."
+      },
+      autumn: {
+        name: "Autumn",
+        icon: "🍂", 
+        description: "Autumn is the season of transition. Focus on immune-boosting herbs that protect against seasonal illnesses and support respiratory health."
+      },
+      winter: {
+        name: "Winter",
+        icon: "❄️",
+        description: "Winter calls for warming, circulatory herbs that support immunity during cold months and can be grown indoors or harvested from storage."
+      }
+    };
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      renderHerbGrid();
+      setupEventListeners();
+      setupModalFunctionality();
+      setupSeasonalModalFunctionality();
+    });
+
+    // Render herb grid
+    function renderHerbGrid(filteredHerbs = herbs) {
+      const grid = document.getElementById('herbGrid');
+      
+      if (filteredHerbs.length === 0) {
+        grid.innerHTML = `
+          <div class="no-results">
+            <h3>🌱 No herbs found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filteredHerbs.map(herb => `
+        <div class="card" data-tags="${herb.tags.join(' ')}">
+          <img src="${herb.image}" alt="${herb.name}">
+          <div class="card-content">
+            <h3>${herb.name}</h3>
+            <span class="latin-name">${herb.latin}</span>
+            <p class="benefits">${herb.benefits}</p>
+            <div class="herb-tags">
+              ${herb.tags.map(tag => `<span class="herb-tag">${tag}</span>`).join('')}
+            </div>
+            <div class="quick-tip">
+              <strong>💡 Quick Tip:</strong> ${herb.quickTip}
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 0.8rem; color: #666;">
+              <span>🌿 ${herb.difficulty}</span>
+              <span>📅 ${herb.season}</span>
+            </div>
+          </div>
+          <a href="${herb.link}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></a>
+        </div>
+      `).join('');
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      const searchInput = document.getElementById('searchInput');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+
+      // Search functionality
+      searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        filterHerbs(searchTerm, getActiveFilter());
+      });
+
+      // Filter buttons
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          filterHerbs(searchInput.value.toLowerCase(), this.dataset.filter);
+        });
+      });
+    }
+
+    // Filter herbs based on search and filter
+    function filterHerbs(searchTerm, filter) {
+      let filtered = herbs;
+
+      // Apply search filter
+      if (searchTerm) {
+        filtered = filtered.filter(herb => 
+          herb.name.toLowerCase().includes(searchTerm) ||
+          herb.latin.toLowerCase().includes(searchTerm) ||
+          herb.benefits.toLowerCase().includes(searchTerm) ||
+          herb.quickTip.toLowerCase().includes(searchTerm) ||
+          herb.tags.some(tag => tag.includes(searchTerm))
+        );
+      }
+
+      // Apply category filter
+      if (filter !== 'all') {
+        filtered = filtered.filter(herb => herb.tags.includes(filter));
+      }
+
+      renderHerbGrid(filtered);
+    }
+
+    // Get active filter
+    function getActiveFilter() {
+      const activeBtn = document.querySelector('.filter-btn.active');
+      return activeBtn ? activeBtn.dataset.filter : 'all';
+    }
+
+    // Quick Action Functions
+    function showHerbComparison() {
+      const modal = document.getElementById('compareModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function showSeasonalPicks() {
+      const modal = document.getElementById('seasonalModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Initialize seasonal data when modal opens
+      displayCurrentSeason();
+      populateSeasonCounts();
+      displayAllSeasonalHerbs();
+      setupSeasonNavigation();
+      
+      // Show current season by default
+      showSeason(getCurrentSeason());
+    }
+
+    // Modal functionality
+    function setupModalFunctionality() {
+      const compareModal = document.getElementById('compareModal');
+      const closeCompareBtn = document.getElementById('closeCompareModal');
+      const compareBtn = document.getElementById('compareBtn');
+      const herb1Select = document.getElementById('herb1Select');
+      const herb2Select = document.getElementById('herb2Select');
+      const quickSelectBtns = document.querySelectorAll('.quick-select-btn');
+
+      // Close modal when clicking X
+      closeCompareBtn.addEventListener('click', function() {
+        closeModal(compareModal);
+      });
+
+      // Close modal when clicking outside content
+      compareModal.addEventListener('click', function(e) {
+        if (e.target === compareModal) {
+          closeModal(compareModal);
+        }
+      });
+
+      // Populate dropdowns
+      populateHerbDropdowns();
+
+      // Enable compare button when both herbs are selected
+      [herb1Select, herb2Select].forEach(select => {
+        select.addEventListener('change', function() {
+          const herb1 = herb1Select.value;
+          const herb2 = herb2Select.value;
+          compareBtn.disabled = !(herb1 && herb2 && herb1 !== herb2);
+        });
+      });
+
+      // Compare button click
+      compareBtn.addEventListener('click', compareHerbs);
+
+      // Quick selection buttons
+      quickSelectBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const herb1Name = this.dataset.herb1;
+          const herb2Name = this.dataset.herb2;
+          
+          const herb1 = herbsDetailed.find(h => h.name.includes(herb1Name));
+          const herb2 = herbsDetailed.find(h => h.name.includes(herb2Name));
+          
+          if (herb1 && herb2) {
+            herb1Select.value = herb1.id;
+            herb2Select.value = herb2.id;
+            compareBtn.disabled = false;
+            compareHerbs();
+          }
+        });
+      });
+    }
+
+    function setupSeasonalModalFunctionality() {
+      const seasonalModal = document.getElementById('seasonalModal');
+      const closeSeasonalBtn = document.getElementById('closeSeasonalModal');
+
+      // Close modal when clicking X
+      closeSeasonalBtn.addEventListener('click', function() {
+        closeModal(seasonalModal);
+      });
+
+      // Close modal when clicking outside content
+      seasonalModal.addEventListener('click', function(e) {
+        if (e.target === seasonalModal) {
+          closeModal(seasonalModal);
+        }
+      });
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      
+      // Reset comparison state if it's the compare modal
+      if (modal.id === 'compareModal') {
+        resetComparison();
+      }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+          closeModal(activeModal);
+        }
+      }
+    });
+
+    // Populate dropdown menus for comparison
+    function populateHerbDropdowns() {
+      const herb1Select = document.getElementById('herb1Select');
+      const herb2Select = document.getElementById('herb2Select');
+      
+      herbsDetailed.forEach(herb => {
+        const option1 = new Option(herb.name, herb.id);
+        const option2 = new Option(herb.name, herb.id);
+        
+        herb1Select.add(option1);
+        herb2Select.add(option2);
+      });
+    }
+
+    // Main comparison function
+    function compareHerbs() {
+      const loading = document.getElementById('loading');
+      const results = document.getElementById('comparisonResults');
+      const herb1Id = document.getElementById('herb1Select').value;
+      const herb2Id = document.getElementById('herb2Select').value;
+      
+      if (!herb1Id || !herb2Id || herb1Id === herb2Id) return;
+      
+      const herb1 = herbsDetailed.find(h => h.id === herb1Id);
+      const herb2 = herbsDetailed.find(h => h.id === herb2Id);
+      
+      if (!herb1 || !herb2) return;
+      
+      // Show loading
+      loading.classList.add('show');
+      results.classList.remove('show');
+      
+      // Simulate analysis delay
+      setTimeout(() => {
+        displayHerbCards(herb1, herb2);
+        displayComparisonMatrix(herb1, herb2);
+        displayRecommendations(herb1, herb2);
+        
+        loading.classList.remove('show');
+        results.classList.add('show');
+        
+        // Scroll to results
+        results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 1000);
+    }
+
+    // Display herb cards
+    function displayHerbCards(herb1, herb2) {
+      const herbCards = document.getElementById('herbCards');
+      
+      herbCards.innerHTML = `
+        <div class="comparison-herb-card">
+          <img src="${herb1.image}" alt="${herb1.name}" class="herb-image">
+          <div class="herb-card-content">
+            <h3 class="herb-name">${herb1.name}</h3>
+            <span class="latin-name">${herb1.latin}</span>
+            <p class="herb-benefits">${herb1.description}</p>
+            
+            <div class="herb-details">
+              <div class="detail-item">
+                <span class="detail-label">Best For:</span>
+                <span class="detail-value">${herb1.bestFor.join(', ')}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Preparation:</span>
+                <span class="detail-value">${herb1.preparation.join(', ')}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Growing:</span>
+                <span class="detail-value">${herb1.growing.difficulty}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Tags:</span>
+                <span class="detail-value">
+                  ${herb1.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="comparison-herb-card">
+          <img src="${herb2.image}" alt="${herb2.name}" class="herb-image">
+          <div class="herb-card-content">
+            <h3 class="herb-name">${herb2.name}</h3>
+            <span class="latin-name">${herb2.latin}</span>
+            <p class="herb-benefits">${herb2.description}</p>
+            
+            <div class="herb-details">
+              <div class="detail-item">
+                <span class="detail-label">Best For:</span>
+                <span class="detail-value">${herb2.bestFor.join(', ')}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Preparation:</span>
+                <span class="detail-value">${herb2.preparation.join(', ')}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Growing:</span>
+                <span class="detail-value">${herb2.growing.difficulty}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Tags:</span>
+                <span class="detail-value">
+                  ${herb2.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Display comparison matrix
+    function displayComparisonMatrix(herb1, herb2) {
+      const matrix = document.getElementById('comparisonMatrix');
+      
+      const comparisons = [
+        { category: "Potency", herb1: herb1.properties.potency, herb2: herb2.properties.potency },
+        { category: "Speed of Action", herb1: herb1.properties.speed, herb2: herb2.properties.speed },
+        { category: "Safety Profile", herb1: herb1.properties.safety, herb2: herb2.properties.safety },
+        { category: "Taste", herb1: herb1.properties.taste, herb2: herb2.properties.taste },
+        { category: "Cost", herb1: herb1.properties.cost, herb2: herb2.properties.cost },
+        { category: "Growing Difficulty", herb1: herb1.growing.difficulty, herb2: herb2.growing.difficulty },
+        { category: "Best Season", herb1: herb1.growing.season, herb2: herb2.growing.season }
+      ];
+      
+      matrix.innerHTML = comparisons.map(comp => `
+        <div class="matrix-row">
+          <div class="matrix-category">${comp.category}</div>
+          <div class="matrix-value herb-1">${comp.herb1}</div>
+          <div class="matrix-value herb-2">${comp.herb2}</div>
+        </div>
+      `).join('');
+    }
+
+    // Display recommendations
+    function displayRecommendations(herb1, herb2) {
+      const recommendations = document.getElementById('recommendationsContent');
+      
+      // Generate intelligent recommendations based on herb properties
+      const commonTags = herb1.tags.filter(tag => herb2.tags.includes(tag));
+      const uniqueTags1 = herb1.tags.filter(tag => !herb2.tags.includes(tag));
+      const uniqueTags2 = herb2.tags.filter(tag => !herb1.tags.includes(tag));
+      
+      let recommendationHTML = '';
+      
+      // Recommendation based on common properties
+      if (commonTags.length > 0) {
+        recommendationHTML += `
+          <div class="recommendation-card">
+            <h4>🌿 Complementary Use</h4>
+            <p>Both ${herb1.name} and ${herb2.name} are excellent for <strong>${commonTags.join(', ')}</strong>. 
+            Consider using them together for enhanced benefits, especially for ${herb1.bestFor.filter(use => herb2.bestFor.includes(use)).join(' or ')}.</p>
+          </div>
+        `;
+      }
+      
+      // Recommendation based on unique properties
+      if (uniqueTags1.length > 0) {
+        recommendationHTML += `
+          <div class="recommendation-card">
+            <h4>⭐ Choose ${herb1.name} For</h4>
+            <p>${herb1.name} is particularly effective for <strong>${uniqueTags1.join(', ')}</strong>. 
+            It's your best choice when dealing with ${herb1.bestFor.filter(use => !herb2.bestFor.includes(use)).join(' or ')}.</p>
+          </div>
+        `;
+      }
+      
+      if (uniqueTags2.length > 0) {
+        recommendationHTML += `
+          <div class="recommendation-card">
+            <h4>⭐ Choose ${herb2.name} For</h4>
+            <p>${herb2.name} excels in <strong>${uniqueTags2.join(', ')}</strong>. 
+            Select this herb when you need help with ${herb2.bestFor.filter(use => !herb1.bestFor.includes(use)).join(' or ')}.</p>
+          </div>
+        `;
+      }
+      
+      // General recommendation
+      recommendationHTML += `
+        <div class="recommendation-card">
+          <h4>💡 Professional Advice</h4>
+          <p>${getGeneralRecommendation(herb1, herb2)} Always consult with a healthcare provider before starting any new herbal regimen, especially if you have pre-existing conditions or are taking medications.</p>
+        </div>
+      `;
+      
+      recommendations.innerHTML = recommendationHTML;
+    }
+
+    // Generate general recommendation
+    function getGeneralRecommendation(herb1, herb2) {
+      if (herb1.properties.safety === 'High' && herb2.properties.safety === 'High') {
+        return `Both herbs have excellent safety profiles, making them suitable for long-term use. `;
+      } else if (herb1.properties.potency === 'High' && herb2.properties.potency === 'High') {
+        return `These are potent herbs - start with low doses and monitor your body's response. `;
+      } else {
+        return `Consider starting with ${herb1.properties.safety === 'High' ? herb1.name : herb2.name} if you're new to herbal remedies. `;
+      }
+    }
+
+    // Reset comparison
+    function resetComparison() {
+      document.getElementById('herb1Select').value = '';
+      document.getElementById('herb2Select').value = '';
+      document.getElementById('compareBtn').disabled = true;
+      document.getElementById('comparisonResults').classList.remove('show');
+    }
+
+    // Seasonal Picks Functions
+    function getCurrentSeason() {
+      const month = new Date().getMonth();
+      if (month >= 2 && month <= 4) return "spring";
+      if (month >= 5 && month <= 7) return "summer"; 
+      if (month >= 8 && month <= 10) return "autumn";
+      return "winter";
+    }
+
+    // Display current season information
+    function displayCurrentSeason() {
+      const currentSeason = getCurrentSeason();
+      const season = seasonInfo[currentSeason];
+      
+      document.getElementById('currentSeasonBadge').textContent = 
+        `${season.icon} Current Season: ${season.name}`;
+      document.getElementById('currentSeasonDesc').textContent = season.description;
+    }
+
+    // Populate season counts
+    function populateSeasonCounts() {
+      Object.keys(herbsBySeason).forEach(season => {
+        const count = herbsBySeason[season].length;
+        document.getElementById(`${season}Count`).textContent = 
+          `${count} herb${count !== 1 ? 's' : ''}`;
+      });
+    }
+
+    // Display all herbs organized by season
+    function displayAllSeasonalHerbs() {
+      Object.keys(herbsBySeason).forEach(season => {
+        const herbs = herbsBySeason[season];
+        const gridElement = document.getElementById(`${season}Herbs`);
+        
+        if (herbs.length === 0) {
+          gridElement.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #4b694b;">
+              <h3>No herbs available for ${season}</h3>
+              <p>Check back later for updates</p>
+            </div>
+          `;
+          return;
+        }
+        
+        gridElement.innerHTML = herbs.map(herb => `
+          <a href="${herb.link}" class="seasonal-herb-card">
+            <img src="${herb.image}" alt="${herb.name}">
+            <div class="seasonal-herb-info">
+              <h3>${herb.name}</h3>
+              <p>${herb.benefits}</p>
+              <span class="season-tag">${seasonInfo[season].icon} ${season.charAt(0).toUpperCase() + season.slice(1)}</span>
+            </div>
+          </a>
+        `).join('');
+      });
+    }
+
+    // Setup season navigation
+    function setupSeasonNavigation() {
+      const seasonCards = document.querySelectorAll('.season-card');
+      
+      seasonCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const season = this.dataset.season;
+          showSeason(season);
+        });
+      });
+    }
+
+    // Show specific season
+    function showSeason(season) {
+      // Update active navigation card
+      document.querySelectorAll('.season-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      document.querySelector(`[data-season="${season}"]`).classList.add('active');
+      
+      // Show selected season section
+      document.querySelectorAll('.season-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(`${season}Section`).classList.add('active');
+      
+      // Scroll to section
+      document.getElementById(`${season}Section`).scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  </script>
+</body>
+</html>
